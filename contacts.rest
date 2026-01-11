@@ -1,5 +1,8 @@
-### GET all contacts
+### GET all contacts - LOCAL
 GET http://localhost:8080/
 
 ### GET contact by ID
 GET http://localhost:8080/6963bc47cc3f8d979696ae83
+
+### GET all contacts - RENDER
+GET https://cse341-contacts-scfd.onrender.com/
