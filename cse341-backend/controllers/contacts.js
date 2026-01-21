@@ -62,13 +62,24 @@ const updateContact = async (req, res) => {
 };
 
 const deleteContact = async (req, res) => {
+  // 1. Convert the string ID to a MongoDB ObjectId
   const userId = new ObjectId(req.params.id);
-  const response = await mongodb.getDb().db('professionalDB').collection('contacts').deleteOne({ _id: userId }, true);
+
+  // 2. Perform the delete (I removed the extra "true" parameter)
+  const response = await mongodb
+    .getDb()
+    .db('professionalDB')
+    .collection('contacts')
+    .deleteOne({ _id: userId });
   console.log(response);
+
+  // 3. Check if the deletion was successful
   if (response.deletedCount > 0) {
+    // 204 No Content is the correct status for a successful delete
     res.status(204).send();
   } else {
-    res.status(500).json(response.error || 'Some error occurred while deleting the contact.');
+    // If deletedCount is 0, the ID simply wasn't found
+    res.status(404).json('Contact not found or already deleted.');
   }
 };
 
